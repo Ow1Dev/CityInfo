@@ -1,0 +1,773 @@
+2020-04-24 11:03:09.7727|INFO|CityInfoAPI.Program|Initializing application...
+2020-04-24 11:03:11.2300|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:03:12.3796|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (19ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [CityInfoDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2020-04-24 11:03:12.6062|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (220ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+DROP DATABASE [CityInfoDB];
+2020-04-24 11:03:22.7844|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (155ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+CREATE DATABASE [CityInfoDB];
+2020-04-24 11:03:22.8188|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (32ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [CityInfoDB] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2020-04-24 11:03:22.8654|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2020-04-24 11:03:22.8721|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2020-04-24 11:03:22.8721|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2020-04-24 11:03:22.8721|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200408094330_CityInfoDBInitialMigration'.
+2020-04-24 11:03:22.8954|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Cities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [Description] nvarchar(200) NULL,
+    CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+);
+2020-04-24 11:03:22.9014|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [PointOfInterest] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [CityId] int NOT NULL,
+    CONSTRAINT [PK_PointOfInterest] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_PointOfInterest_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+);
+2020-04-24 11:03:22.9014|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_PointOfInterest_CityId] ON [PointOfInterest] ([CityId]);
+2020-04-24 11:03:22.9014|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200408094330_CityInfoDBInitialMigration', N'2.1.14-servicing-32113');
+2020-04-24 11:03:22.9014|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200408095834_CityInfoDBAddPoIDescription'.
+2020-04-24 11:03:22.9169|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+ALTER TABLE [PointOfInterest] ADD [Description] nvarchar(200) NULL;
+2020-04-24 11:03:22.9169|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200408095834_CityInfoDBAddPoIDescription', N'2.1.14-servicing-32113');
+2020-04-24 11:03:22.9169|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200408101808_SampleData'.
+2020-04-24 11:03:22.9505|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (21ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] ON;
+INSERT INTO [Cities] ([Id], [Description], [Name])
+VALUES (1, N'The one with that big park.', N'New York City');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] OFF;
+2020-04-24 11:03:22.9505|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] ON;
+INSERT INTO [Cities] ([Id], [Description], [Name])
+VALUES (2, N'The one with the cathedral that was never really finished.', N'Antwerp');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] OFF;
+2020-04-24 11:03:22.9647|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] ON;
+INSERT INTO [Cities] ([Id], [Description], [Name])
+VALUES (3, N'The one with that big tower.', N'Paris');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] OFF;
+2020-04-24 11:03:22.9760|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'CityId', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[PointOfInterest]'))
+    SET IDENTITY_INSERT [PointOfInterest] ON;
+INSERT INTO [PointOfInterest] ([Id], [CityId], [Description], [Name])
+VALUES (1, 1, N'The most visited urban park in the United States.', N'Central Park'),
+(2, 1, N'A 102-story skyscraper located in Midtown Manhattan.', N'Empire State Building'),
+(3, 2, N'A Gothic style cathedral, conceived by architects Jan and Pieter Appelmans.', N'Cathedral'),
+(4, 2, N'The the finest example of railway architecture in Belgium.', N'Antwerp Central Station'),
+(5, 3, N'A wrought iron lattice tower on the Champ de Mars, named after engineer Gustave Eiffel.', N'Eiffel Tower'),
+(6, 3, N'The world''s largest museum.', N'The Louvre');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'CityId', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[PointOfInterest]'))
+    SET IDENTITY_INSERT [PointOfInterest] OFF;
+2020-04-24 11:03:22.9760|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200408101808_SampleData', N'2.1.14-servicing-32113');
+2020-04-24 11:03:22.9760|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200415111037_AddLanguage'.
+2020-04-24 11:03:22.9760|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Languages] (
+    [Id] int NOT NULL IDENTITY,
+    [LanguageName] nvarchar(50) NOT NULL,
+    CONSTRAINT [PK_Languages] PRIMARY KEY ([Id])
+);
+2020-04-24 11:03:22.9927|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [CityLanguages] (
+    [CityId] int NOT NULL,
+    [LanguageId] int NOT NULL,
+    CONSTRAINT [PK_CityLanguages] PRIMARY KEY ([CityId], [LanguageId]),
+    CONSTRAINT [FK_CityLanguages_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_CityLanguages_Languages_LanguageId] FOREIGN KEY ([LanguageId]) REFERENCES [Languages] ([Id]) ON DELETE CASCADE
+);
+2020-04-24 11:03:22.9927|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_CityLanguages_LanguageId] ON [CityLanguages] ([LanguageId]);
+2020-04-24 11:03:22.9927|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200415111037_AddLanguage', N'2.1.14-servicing-32113');
+2020-04-24 11:03:22.9927|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200415124150_LanguageName'.
+2020-04-24 11:03:23.1700|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (164ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+EXEC sp_rename N'[Languages].[LanguageName]', N'Name', N'COLUMN';
+2020-04-24 11:03:23.1700|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200415124150_LanguageName', N'2.1.14-servicing-32113');
+2020-04-24 11:03:23.2177|INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\TheOwlGamerPC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-04-24 11:03:23.7388|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:1028/  0
+2020-04-24 11:03:23.7543|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 14.4931ms 200 
+2020-04-24 11:04:11.2270|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities?orderby=Lang  
+2020-04-24 11:04:11.3183|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "getCities", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult getCities(System.String, Boolean) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:04:11.5823|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:04:11.5955|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:04:11.7059|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Cities] AS [c]
+ORDER BY [c].[Id]
+2020-04-24 11:04:11.7308|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.CityLanguages].[CityId], [c.CityLanguages].[LanguageId]
+FROM [CityLanguages] AS [c.CityLanguages]
+INNER JOIN (
+    SELECT [c0].[Id]
+    FROM [Cities] AS [c0]
+) AS [t] ON [c.CityLanguages].[CityId] = [t].[Id]
+ORDER BY [t].[Id]
+2020-04-24 11:04:11.7308|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.PointsOfInterest].[Id], [c.PointsOfInterest].[CityId], [c.PointsOfInterest].[Description], [c.PointsOfInterest].[Name]
+FROM [PointOfInterest] AS [c.PointsOfInterest]
+INNER JOIN (
+    SELECT [c1].[Id]
+    FROM [Cities] AS [c1]
+) AS [t0] ON [c.PointsOfInterest].[CityId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2020-04-24 11:04:11.7636|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 177.8418ms.
+2020-04-24 11:04:11.7636|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.CityWithoutPointsOfInterestDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:04:11.8168|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) in 491.6587ms
+2020-04-24 11:04:11.8245|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 595.5362ms 200 application/json; charset=utf-8
+2020-04-24 11:04:40.5621|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities?GoDeeper=true  
+2020-04-24 11:04:40.5878|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "getCities", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult getCities(System.String, Boolean) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:04:40.5878|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:04:40.5878|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:04:40.6031|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Cities] AS [c]
+ORDER BY [c].[Id]
+2020-04-24 11:04:40.6031|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.CityLanguages].[CityId], [c.CityLanguages].[LanguageId]
+FROM [CityLanguages] AS [c.CityLanguages]
+INNER JOIN (
+    SELECT [c0].[Id]
+    FROM [Cities] AS [c0]
+) AS [t] ON [c.CityLanguages].[CityId] = [t].[Id]
+ORDER BY [t].[Id]
+2020-04-24 11:04:40.6031|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.PointsOfInterest].[Id], [c.PointsOfInterest].[CityId], [c.PointsOfInterest].[Description], [c.PointsOfInterest].[Name]
+FROM [PointOfInterest] AS [c.PointsOfInterest]
+INNER JOIN (
+    SELECT [c1].[Id]
+    FROM [Cities] AS [c1]
+) AS [t0] ON [c.PointsOfInterest].[CityId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2020-04-24 11:04:40.6200|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 22.9339ms.
+2020-04-24 11:04:40.6200|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.CityDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:04:40.6323|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) in 42.6651ms
+2020-04-24 11:04:40.6323|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 74.4568ms 200 application/json; charset=utf-8
+2020-04-24 11:04:55.1495|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/languages application/json 21
+2020-04-24 11:04:55.1495|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguages(CityInfoAPI.Models.LanguageOfCreation) on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:04:55.1753|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:04:55.1807|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:04:55.2170|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Languages] ([Name])
+VALUES (@p0);
+SELECT [Id]
+FROM [Languages]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+2020-04-24 11:04:55.2267|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.CreatedAtRouteResult in 49.5633ms.
+2020-04-24 11:04:55.2267|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'CityInfoAPI.Models.LanguageDto'.
+2020-04-24 11:04:55.2267|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI) in 81.9003ms
+2020-04-24 11:04:55.2267|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 89.1952ms 201 application/json; charset=utf-8
+2020-04-24 11:05:05.3923|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/cities/1/languages application/json 12
+2020-04-24 11:05:05.3923|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguageFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguageFromCity(Int32, CityInfoAPI.Models.LanguageCityForAddingDto) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:05:05.4036|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:05:05.4036|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:05:05.4288|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Cities] AS [c]
+        WHERE [c].[Id] = @__cityId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:05:05.4354|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Languages] AS [l]
+        WHERE [l].[Id] = @__id_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:05:05.4462|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [CityLanguages] ([CityId], [LanguageId])
+VALUES (@p0, @p1);
+2020-04-24 11:05:05.4462|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.NoContentResult in 43.4947ms.
+2020-04-24 11:05:05.4462|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 204
+2020-04-24 11:05:05.4462|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) in 57.2139ms
+2020-04-24 11:05:05.4462|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 65.0117ms 204 
+2020-04-24 11:05:11.6840|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities/1/languages  
+2020-04-24 11:05:11.6840|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguagesFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[CityInfoAPI.Models.LanguageDto]] GetLanguagesFromCity(Int32) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:05:11.6958|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:05:11.6958|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:05:11.7202|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (5ms) [Parameters=[@__cityID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [v.CityLanguages.Language].[Id], [v.CityLanguages.Language].[Name]
+FROM [Languages] AS [v]
+INNER JOIN [CityLanguages] AS [v.CityLanguages] ON [v].[Id] = [v.CityLanguages].[LanguageId]
+INNER JOIN [Languages] AS [v.CityLanguages.Language] ON [v.CityLanguages].[LanguageId] = [v.CityLanguages.Language].[Id]
+WHERE [v.CityLanguages].[CityId] = @__cityID_0
+2020-04-24 11:05:11.7269|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 28.4931ms.
+2020-04-24 11:05:11.7269|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.LanguageDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:05:11.7269|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI) in 37.3128ms
+2020-04-24 11:05:11.7269|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 55.5221ms 200 application/json; charset=utf-8
+2020-04-24 11:05:17.2711|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities?GoDeeper=true  
+2020-04-24 11:05:17.2728|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "getCities", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult getCities(System.String, Boolean) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:05:17.2728|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:05:17.2728|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:05:17.2728|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Cities] AS [c]
+ORDER BY [c].[Id]
+2020-04-24 11:05:17.2728|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.CityLanguages].[CityId], [c.CityLanguages].[LanguageId]
+FROM [CityLanguages] AS [c.CityLanguages]
+INNER JOIN (
+    SELECT [c0].[Id]
+    FROM [Cities] AS [c0]
+) AS [t] ON [c.CityLanguages].[CityId] = [t].[Id]
+ORDER BY [t].[Id]
+2020-04-24 11:05:17.2728|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.PointsOfInterest].[Id], [c.PointsOfInterest].[CityId], [c.PointsOfInterest].[Description], [c.PointsOfInterest].[Name]
+FROM [PointOfInterest] AS [c.PointsOfInterest]
+INNER JOIN (
+    SELECT [c1].[Id]
+    FROM [Cities] AS [c1]
+) AS [t0] ON [c.PointsOfInterest].[CityId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2020-04-24 11:05:17.2905|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 14.1845ms.
+2020-04-24 11:05:17.2905|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.CityDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:05:17.2905|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) in 19.4723ms
+2020-04-24 11:05:17.2905|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 24.4293ms 200 application/json; charset=utf-8
+2020-04-24 11:07:12.0504|INFO|CityInfoAPI.Program|Initializing application...
+2020-04-24 11:07:13.3806|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:07:14.4360|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [CityInfoDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2020-04-24 11:07:14.4541|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (13ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+DROP DATABASE [CityInfoDB];
+2020-04-24 11:07:24.6103|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (142ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+CREATE DATABASE [CityInfoDB];
+2020-04-24 11:07:24.6427|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (31ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [CityInfoDB] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2020-04-24 11:07:24.6821|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2020-04-24 11:07:24.6821|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2020-04-24 11:07:24.6821|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2020-04-24 11:07:24.6821|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200408094330_CityInfoDBInitialMigration'.
+2020-04-24 11:07:24.7056|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Cities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [Description] nvarchar(200) NULL,
+    CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+);
+2020-04-24 11:07:24.7056|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [PointOfInterest] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [CityId] int NOT NULL,
+    CONSTRAINT [PK_PointOfInterest] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_PointOfInterest_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+);
+2020-04-24 11:07:24.7111|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_PointOfInterest_CityId] ON [PointOfInterest] ([CityId]);
+2020-04-24 11:07:24.7111|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200408094330_CityInfoDBInitialMigration', N'2.1.14-servicing-32113');
+2020-04-24 11:07:24.7111|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200408095834_CityInfoDBAddPoIDescription'.
+2020-04-24 11:07:24.7111|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+ALTER TABLE [PointOfInterest] ADD [Description] nvarchar(200) NULL;
+2020-04-24 11:07:24.7111|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200408095834_CityInfoDBAddPoIDescription', N'2.1.14-servicing-32113');
+2020-04-24 11:07:24.7282|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200408101808_SampleData'.
+2020-04-24 11:07:24.7560|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (20ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] ON;
+INSERT INTO [Cities] ([Id], [Description], [Name])
+VALUES (1, N'The one with that big park.', N'New York City');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] OFF;
+2020-04-24 11:07:24.7626|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] ON;
+INSERT INTO [Cities] ([Id], [Description], [Name])
+VALUES (2, N'The one with the cathedral that was never really finished.', N'Antwerp');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] OFF;
+2020-04-24 11:07:24.7626|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] ON;
+INSERT INTO [Cities] ([Id], [Description], [Name])
+VALUES (3, N'The one with that big tower.', N'Paris');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[Cities]'))
+    SET IDENTITY_INSERT [Cities] OFF;
+2020-04-24 11:07:24.7783|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'CityId', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[PointOfInterest]'))
+    SET IDENTITY_INSERT [PointOfInterest] ON;
+INSERT INTO [PointOfInterest] ([Id], [CityId], [Description], [Name])
+VALUES (1, 1, N'The most visited urban park in the United States.', N'Central Park'),
+(2, 1, N'A 102-story skyscraper located in Midtown Manhattan.', N'Empire State Building'),
+(3, 2, N'A Gothic style cathedral, conceived by architects Jan and Pieter Appelmans.', N'Cathedral'),
+(4, 2, N'The the finest example of railway architecture in Belgium.', N'Antwerp Central Station'),
+(5, 3, N'A wrought iron lattice tower on the Champ de Mars, named after engineer Gustave Eiffel.', N'Eiffel Tower'),
+(6, 3, N'The world''s largest museum.', N'The Louvre');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'CityId', N'Description', N'Name') AND [object_id] = OBJECT_ID(N'[PointOfInterest]'))
+    SET IDENTITY_INSERT [PointOfInterest] OFF;
+2020-04-24 11:07:24.7783|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200408101808_SampleData', N'2.1.14-servicing-32113');
+2020-04-24 11:07:24.7783|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200415111037_AddLanguage'.
+2020-04-24 11:07:24.7909|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Languages] (
+    [Id] int NOT NULL IDENTITY,
+    [LanguageName] nvarchar(50) NOT NULL,
+    CONSTRAINT [PK_Languages] PRIMARY KEY ([Id])
+);
+2020-04-24 11:07:24.7909|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [CityLanguages] (
+    [CityId] int NOT NULL,
+    [LanguageId] int NOT NULL,
+    CONSTRAINT [PK_CityLanguages] PRIMARY KEY ([CityId], [LanguageId]),
+    CONSTRAINT [FK_CityLanguages_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_CityLanguages_Languages_LanguageId] FOREIGN KEY ([LanguageId]) REFERENCES [Languages] ([Id]) ON DELETE CASCADE
+);
+2020-04-24 11:07:24.7909|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_CityLanguages_LanguageId] ON [CityLanguages] ([LanguageId]);
+2020-04-24 11:07:24.7909|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200415111037_AddLanguage', N'2.1.14-servicing-32113');
+2020-04-24 11:07:24.7909|INFO|Microsoft.EntityFrameworkCore.Migrations|Applying migration '20200415124150_LanguageName'.
+2020-04-24 11:07:24.9523|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (148ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+EXEC sp_rename N'[Languages].[LanguageName]', N'Name', N'COLUMN';
+2020-04-24 11:07:24.9523|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200415124150_LanguageName', N'2.1.14-servicing-32113');
+2020-04-24 11:07:24.9892|INFO|Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager|User profile is available. Using 'C:\Users\TheOwlGamerPC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-04-24 11:07:25.4409|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DEBUG http://localhost:1028/  0
+2020-04-24 11:07:25.4409|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities?GoDeeper=true  
+2020-04-24 11:07:25.4552|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 14.2591ms 200 
+2020-04-24 11:07:25.5239|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "getCities", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult getCities(System.String, Boolean) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:07:25.7842|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:07:25.7941|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:07:25.8992|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Cities] AS [c]
+ORDER BY [c].[Id]
+2020-04-24 11:07:25.9219|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.CityLanguages].[CityId], [c.CityLanguages].[LanguageId], [c.Language].[Id], [c.Language].[Name]
+FROM [CityLanguages] AS [c.CityLanguages]
+INNER JOIN [Languages] AS [c.Language] ON [c.CityLanguages].[LanguageId] = [c.Language].[Id]
+INNER JOIN (
+    SELECT [c0].[Id]
+    FROM [Cities] AS [c0]
+) AS [t] ON [c.CityLanguages].[CityId] = [t].[Id]
+ORDER BY [t].[Id]
+2020-04-24 11:07:25.9219|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.PointsOfInterest].[Id], [c.PointsOfInterest].[CityId], [c.PointsOfInterest].[Description], [c.PointsOfInterest].[Name]
+FROM [PointOfInterest] AS [c.PointsOfInterest]
+INNER JOIN (
+    SELECT [c1].[Id]
+    FROM [Cities] AS [c1]
+) AS [t0] ON [c.PointsOfInterest].[CityId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2020-04-24 11:07:40.7767|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 14988.6952ms.
+2020-04-24 11:07:40.7767|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.CityDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:07:40.8277|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) in 15299.1411ms
+2020-04-24 11:07:40.8277|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 15392.3215ms 200 application/json; charset=utf-8
+2020-04-24 11:07:51.8904|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 PUT http://localhost:1028/api/languages/1 application/json 31
+2020-04-24 11:07:51.9001|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "UpdateLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult UpdateLanguages(Int32, CityInfoAPI.Models.LanguageOfUpdate) on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:07:51.9196|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.UpdateLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:07:51.9196|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:07:51.9366|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__languageId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [l].[Id], [l].[Name]
+FROM [Languages] AS [l]
+WHERE [l].[Id] = @__languageId_0
+2020-04-24 11:07:51.9366|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.UpdateLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.NotFoundResult in 18.1707ms.
+2020-04-24 11:07:51.9366|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 404
+2020-04-24 11:07:51.9459|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.UpdateLanguages (CityInfoAPI) in 43.5243ms
+2020-04-24 11:07:51.9459|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 58.3691ms 404 text/plain
+2020-04-24 11:07:57.1766|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/cities/1/languages application/json 12
+2020-04-24 11:07:57.1797|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguageFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguageFromCity(Int32, CityInfoAPI.Models.LanguageCityForAddingDto) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:07:57.1797|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:07:57.1797|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:07:57.2020|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Cities] AS [c]
+        WHERE [c].[Id] = @__cityId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:07:57.2020|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Languages] AS [l]
+        WHERE [l].[Id] = @__id_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:07:57.2115|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.NotFoundResult in 25.9022ms.
+2020-04-24 11:07:57.2115|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 404
+2020-04-24 11:07:57.2115|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) in 33.696ms
+2020-04-24 11:07:57.2115|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 40.3874ms 404 text/plain
+2020-04-24 11:08:03.6598|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities?GoDeeper=true  
+2020-04-24 11:08:03.6598|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "getCities", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult getCities(System.String, Boolean) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:08:03.6646|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:08:03.6646|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:08:03.6646|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Cities] AS [c]
+ORDER BY [c].[Id]
+2020-04-24 11:08:03.6646|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.CityLanguages].[CityId], [c.CityLanguages].[LanguageId], [c.Language].[Id], [c.Language].[Name]
+FROM [CityLanguages] AS [c.CityLanguages]
+INNER JOIN [Languages] AS [c.Language] ON [c.CityLanguages].[LanguageId] = [c.Language].[Id]
+INNER JOIN (
+    SELECT [c0].[Id]
+    FROM [Cities] AS [c0]
+) AS [t] ON [c.CityLanguages].[CityId] = [t].[Id]
+ORDER BY [t].[Id]
+2020-04-24 11:08:03.6646|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.PointsOfInterest].[Id], [c.PointsOfInterest].[CityId], [c.PointsOfInterest].[Description], [c.PointsOfInterest].[Name]
+FROM [PointOfInterest] AS [c.PointsOfInterest]
+INNER JOIN (
+    SELECT [c1].[Id]
+    FROM [Cities] AS [c1]
+) AS [t0] ON [c.PointsOfInterest].[CityId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2020-04-24 11:08:24.6653|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 20998.6467ms.
+2020-04-24 11:08:24.6653|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.CityDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:08:24.6653|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) in 21006.5393ms
+2020-04-24 11:08:24.6653|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 21024.6604ms 200 application/json; charset=utf-8
+2020-04-24 11:08:40.8294|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities/1/languages  
+2020-04-24 11:08:40.8352|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguagesFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[CityInfoAPI.Models.LanguageDto]] GetLanguagesFromCity(Int32) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:08:40.8352|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:08:40.8352|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:08:40.8554|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__cityID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [v.CityLanguages.Language].[Id], [v.CityLanguages.Language].[Name]
+FROM [Languages] AS [v]
+INNER JOIN [CityLanguages] AS [v.CityLanguages] ON [v].[Id] = [v.CityLanguages].[LanguageId]
+INNER JOIN [Languages] AS [v.CityLanguages.Language] ON [v.CityLanguages].[LanguageId] = [v.CityLanguages.Language].[Id]
+WHERE [v.CityLanguages].[CityId] = @__cityID_0
+2020-04-24 11:08:40.8554|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 19.3182ms.
+2020-04-24 11:08:40.8554|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.LanguageDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:08:40.8554|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI) in 27.1742ms
+2020-04-24 11:08:40.8667|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 37.0217ms 200 application/json; charset=utf-8
+2020-04-24 11:08:47.6664|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/cities/1/languages application/json 12
+2020-04-24 11:08:47.6664|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguageFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguageFromCity(Int32, CityInfoAPI.Models.LanguageCityForAddingDto) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:08:47.7013|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:08:47.7013|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:08:47.7013|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Cities] AS [c]
+        WHERE [c].[Id] = @__cityId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:08:47.7013|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Languages] AS [l]
+        WHERE [l].[Id] = @__id_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:08:47.7129|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.NotFoundResult in 8.7009ms.
+2020-04-24 11:08:47.7129|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 404
+2020-04-24 11:08:47.7129|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) in 47.7563ms
+2020-04-24 11:08:47.7129|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 55.676ms 404 text/plain
+2020-04-24 11:08:58.8642|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/languages/1  
+2020-04-24 11:08:58.8680|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguage", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[CityInfoAPI.Models.CityDto] GetLanguage(Int32) on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:08:58.8680|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.GetLanguage (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:08:58.8680|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:08:58.8680|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__languageId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [l].[Id], [l].[Name]
+FROM [Languages] AS [l]
+WHERE [l].[Id] = @__languageId_0
+2020-04-24 11:08:58.8840|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.GetLanguage (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 12.0355ms.
+2020-04-24 11:08:58.8840|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'null'.
+2020-04-24 11:08:58.8840|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.GetLanguage (CityInfoAPI) in 17.9182ms
+2020-04-24 11:08:58.8840|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 25.5129ms 204 
+2020-04-24 11:09:02.3547|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/languages  
+2020-04-24 11:09:02.3547|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[CityInfoAPI.Models.CityDto]] GetLanguages() on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:09:02.3547|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:09:02.3547|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:09:02.3693|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [l].[Id], [l].[Name]
+FROM [Languages] AS [l]
+2020-04-24 11:09:02.3991|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 36.2123ms.
+2020-04-24 11:09:02.3991|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.LanguageDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:09:02.3991|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI) in 42.0531ms
+2020-04-24 11:09:02.3991|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 54.3795ms 200 application/json; charset=utf-8
+2020-04-24 11:09:07.9026|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/languages application/json 21
+2020-04-24 11:09:07.9026|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguages(CityInfoAPI.Models.LanguageOfCreation) on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:09:07.9026|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:09:07.9026|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:09:07.9380|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Languages] ([Name])
+VALUES (@p0);
+SELECT [Id]
+FROM [Languages]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+2020-04-24 11:09:07.9473|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.CreatedAtRouteResult in 37.2011ms.
+2020-04-24 11:09:07.9473|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'CityInfoAPI.Models.LanguageDto'.
+2020-04-24 11:09:07.9473|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI) in 46.3225ms
+2020-04-24 11:09:07.9473|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 53.1811ms 201 application/json; charset=utf-8
+2020-04-24 11:09:12.6046|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/languages/1  
+2020-04-24 11:09:12.6175|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguage", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[CityInfoAPI.Models.CityDto] GetLanguage(Int32) on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:09:12.6175|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.GetLanguage (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:09:12.6175|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:09:12.6175|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__languageId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [l].[Id], [l].[Name]
+FROM [Languages] AS [l]
+WHERE [l].[Id] = @__languageId_0
+2020-04-24 11:09:12.6175|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.GetLanguage (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4.8757ms.
+2020-04-24 11:09:12.6175|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'CityInfoAPI.Models.LanguageDto'.
+2020-04-24 11:09:12.6175|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.GetLanguage (CityInfoAPI) in 10.8116ms
+2020-04-24 11:09:12.6321|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 27.5641ms 200 application/json; charset=utf-8
+2020-04-24 11:09:17.5259|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/cities/1/languages application/json 12
+2020-04-24 11:09:17.5259|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguageFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguageFromCity(Int32, CityInfoAPI.Models.LanguageCityForAddingDto) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:09:17.5259|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:09:17.5259|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:09:17.5259|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Cities] AS [c]
+        WHERE [c].[Id] = @__cityId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:09:17.5259|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Languages] AS [l]
+        WHERE [l].[Id] = @__id_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:09:17.5462|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [CityLanguages] ([CityId], [LanguageId])
+VALUES (@p0, @p1);
+2020-04-24 11:09:17.5462|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.NoContentResult in 16.4699ms.
+2020-04-24 11:09:17.5462|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 204
+2020-04-24 11:09:17.5462|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) in 21.9298ms
+2020-04-24 11:09:17.5541|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 29.0023ms 204 
+2020-04-24 11:09:24.6928|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities?GoDeeper=true  
+2020-04-24 11:09:24.6968|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "getCities", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult getCities(System.String, Boolean) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:09:24.6968|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:09:24.6968|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:09:24.6968|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Cities] AS [c]
+ORDER BY [c].[Id]
+2020-04-24 11:09:24.6968|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.CityLanguages].[CityId], [c.CityLanguages].[LanguageId], [c.Language].[Id], [c.Language].[Name]
+FROM [CityLanguages] AS [c.CityLanguages]
+INNER JOIN [Languages] AS [c.Language] ON [c.CityLanguages].[LanguageId] = [c.Language].[Id]
+INNER JOIN (
+    SELECT [c0].[Id]
+    FROM [Cities] AS [c0]
+) AS [t] ON [c.CityLanguages].[CityId] = [t].[Id]
+ORDER BY [t].[Id]
+2020-04-24 11:09:24.7183|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.PointsOfInterest].[Id], [c.PointsOfInterest].[CityId], [c.PointsOfInterest].[Description], [c.PointsOfInterest].[Name]
+FROM [PointOfInterest] AS [c.PointsOfInterest]
+INNER JOIN (
+    SELECT [c1].[Id]
+    FROM [Cities] AS [c1]
+) AS [t0] ON [c.PointsOfInterest].[CityId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2020-04-24 11:09:36.1124|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 11410.6363ms.
+2020-04-24 11:09:36.1124|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.CityDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:09:36.1124|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) in 11416.8254ms
+2020-04-24 11:09:36.1186|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 11426.5287ms 200 application/json; charset=utf-8
+2020-04-24 11:25:49.4819|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/languages application/json 21
+2020-04-24 11:25:49.4928|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguages(CityInfoAPI.Models.LanguageOfCreation) on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:25:49.4928|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:25:49.4928|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:25:50.1456|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Languages] ([Name])
+VALUES (@p0);
+SELECT [Id]
+FROM [Languages]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+2020-04-24 11:25:50.1484|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.CreatedAtRouteResult in 651.525ms.
+2020-04-24 11:25:50.1484|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'CityInfoAPI.Models.LanguageDto'.
+2020-04-24 11:25:50.1484|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.AddLanguages (CityInfoAPI) in 657.6187ms
+2020-04-24 11:25:50.1484|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 674.3708ms 201 application/json; charset=utf-8
+2020-04-24 11:26:00.3864|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 POST http://localhost:1028/api/cities/1/languages application/json 12
+2020-04-24 11:26:00.3864|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "AddLanguageFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult AddLanguageFromCity(Int32, CityInfoAPI.Models.LanguageCityForAddingDto) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:26:00.3864|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:26:00.3864|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:26:00.3980|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Cities] AS [c]
+        WHERE [c].[Id] = @__cityId_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:26:00.3980|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Languages] AS [l]
+        WHERE [l].[Id] = @__id_0)
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2020-04-24 11:26:00.4438|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (5ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [CityLanguages] ([CityId], [LanguageId])
+VALUES (@p0, @p1);
+2020-04-24 11:26:00.4551|ERROR|Microsoft.EntityFrameworkCore.Update|An exception occurred in the database while saving changes for context type 'CityInfoAPI.Contexts.CityInfoContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Violation of PRIMARY KEY constraint 'PK_CityLanguages'. Cannot insert duplicate key in object 'dbo.CityLanguages'. The duplicate key value is (1, 1).
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-04-24 11:26:18.6474|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.AddLanguageFromCity (CityInfoAPI) in 18254.1207ms
+2020-04-24 11:26:18.6778|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request.
+2020-04-24 11:26:18.7294|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 18341.8905ms 500 text/html; charset=utf-8
+2020-04-24 11:26:36.3247|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/languages  
+2020-04-24 11:26:36.3247|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[CityInfoAPI.Models.CityDto]] GetLanguages() on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:26:36.3247|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:26:36.3247|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:26:36.3376|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [l].[Id], [l].[Name]
+FROM [Languages] AS [l]
+2020-04-24 11:26:36.3376|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 7.0059ms.
+2020-04-24 11:26:36.3376|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.LanguageDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:26:36.3376|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI) in 12.0845ms
+2020-04-24 11:26:36.3376|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 20.3393ms 200 application/json; charset=utf-8
+2020-04-24 11:26:47.9501|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 DELETE http://localhost:1028/api/languages/2  
+2020-04-24 11:26:47.9501|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "RemoveLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult RemoveLanguages(Int32) on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:26:47.9605|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.RemoveLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:26:47.9605|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:26:47.9605|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[@__languageId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(2) [l].[Id], [l].[Name]
+FROM [Languages] AS [l]
+WHERE [l].[Id] = @__languageId_0
+2020-04-24 11:26:47.9768|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Languages]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+2020-04-24 11:26:47.9768|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.RemoveLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.NoContentResult in 17.2878ms.
+2020-04-24 11:26:47.9768|INFO|Microsoft.AspNetCore.Mvc.StatusCodeResult|Executing HttpStatusCodeResult, setting HTTP status code 204
+2020-04-24 11:26:47.9768|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.RemoveLanguages (CityInfoAPI) in 23.2673ms
+2020-04-24 11:26:47.9768|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 36.6835ms 204 
+2020-04-24 11:26:54.6637|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/languages  
+2020-04-24 11:26:54.6637|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguages", controller = "Language"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[CityInfoAPI.Models.CityDto]] GetLanguages() on controller CityInfoAPI.Controllers.LanguageController (CityInfoAPI).
+2020-04-24 11:26:54.6637|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:26:54.6637|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:26:54.6637|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [l].[Id], [l].[Name]
+FROM [Languages] AS [l]
+2020-04-24 11:26:54.6637|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3.893ms.
+2020-04-24 11:26:54.6637|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.LanguageDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:26:54.6637|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.LanguageController.GetLanguages (CityInfoAPI) in 8.7996ms
+2020-04-24 11:26:54.6793|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 15.5281ms 200 application/json; charset=utf-8
+2020-04-24 11:26:59.0881|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities/1/languages  
+2020-04-24 11:26:59.0881|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "GetLanguagesFromCity", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[CityInfoAPI.Models.LanguageDto]] GetLanguagesFromCity(Int32) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:26:59.0881|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:26:59.0881|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:26:59.0881|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[@__cityID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [v.CityLanguages.Language].[Id], [v.CityLanguages.Language].[Name]
+FROM [Languages] AS [v]
+INNER JOIN [CityLanguages] AS [v.CityLanguages] ON [v].[Id] = [v.CityLanguages].[LanguageId]
+INNER JOIN [Languages] AS [v.CityLanguages.Language] ON [v.CityLanguages].[LanguageId] = [v.CityLanguages.Language].[Id]
+WHERE [v.CityLanguages].[CityId] = @__cityID_0
+2020-04-24 11:26:59.1029|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6.5569ms.
+2020-04-24 11:26:59.1029|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.LanguageDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:26:59.1029|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.GetLanguagesFromCity (CityInfoAPI) in 14.7415ms
+2020-04-24 11:26:59.1029|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 22.7347ms 200 application/json; charset=utf-8
+2020-04-24 11:27:39.1856|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request starting HTTP/1.1 GET http://localhost:1028/api/cities?GoDeeper=true  
+2020-04-24 11:27:39.1856|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Route matched with {action = "getCities", controller = "Cities"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult getCities(System.String, Boolean) on controller CityInfoAPI.Controllers.CitiesController (CityInfoAPI).
+2020-04-24 11:27:39.1856|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executing action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) - Validation state: Valid
+2020-04-24 11:27:39.1963|INFO|Microsoft.EntityFrameworkCore.Infrastructure|Entity Framework Core 2.1.14-servicing-32113 initialized 'CityInfoContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-04-24 11:27:39.1963|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Cities] AS [c]
+ORDER BY [c].[Id]
+2020-04-24 11:27:39.1963|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.CityLanguages].[CityId], [c.CityLanguages].[LanguageId], [c.Language].[Id], [c.Language].[Name]
+FROM [CityLanguages] AS [c.CityLanguages]
+INNER JOIN [Languages] AS [c.Language] ON [c.CityLanguages].[LanguageId] = [c.Language].[Id]
+INNER JOIN (
+    SELECT [c0].[Id]
+    FROM [Cities] AS [c0]
+) AS [t] ON [c.CityLanguages].[CityId] = [t].[Id]
+ORDER BY [t].[Id]
+2020-04-24 11:27:39.1963|INFO|Microsoft.EntityFrameworkCore.Database.Command|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c.PointsOfInterest].[Id], [c.PointsOfInterest].[CityId], [c.PointsOfInterest].[Description], [c.PointsOfInterest].[Name]
+FROM [PointOfInterest] AS [c.PointsOfInterest]
+INNER JOIN (
+    SELECT [c1].[Id]
+    FROM [Cities] AS [c1]
+) AS [t0] ON [c.PointsOfInterest].[CityId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2020-04-24 11:27:42.9482|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action method CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3751.8186ms.
+2020-04-24 11:27:42.9482|INFO|Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor|Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[CityInfoAPI.Models.CityDto, CityInfoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2020-04-24 11:27:42.9482|INFO|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|Executed action CityInfoAPI.Controllers.CitiesController.getCities (CityInfoAPI) in 3759.6614ms
+2020-04-24 11:27:42.9482|INFO|Microsoft.AspNetCore.Hosting.Internal.WebHost|Request finished in 3768.2766ms 200 application/json; charset=utf-8
