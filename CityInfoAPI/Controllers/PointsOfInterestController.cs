@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CityInfoAPI.Models;
+using CityInfoAPI.Data.Models;
 using CityInfoAPI.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -96,14 +96,14 @@ namespace CityInfoAPI.Controllers
                 return NotFound();
 
 
-            var finalPointOfInterest = _mapper.Map<Entities.PointOfInterest>(pointOfinterest);
+            var finalPointOfInterest = _mapper.Map<Data.Entities.PointOfInterest>(pointOfinterest);
 
             _cityInfoRepository.AddPointOfInterestForCity(cityId, finalPointOfInterest);
             _cityInfoRepository.Save();
 
 
             var createdPointOfINterestToReturn = _mapper
-                .Map<Models.PointOfInterestDto>(finalPointOfInterest);
+                .Map<Data.Models.PointOfInterestDto>(finalPointOfInterest);
 
             return CreatedAtRoute("GetPointOfInterest",
                 new

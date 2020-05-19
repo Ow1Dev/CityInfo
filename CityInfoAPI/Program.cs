@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CityInfoAPI.Contexts;
+using CityInfoAPI.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Fluent;
 using NLog.Web;
 
-namespace CityInfoAPI
+namespace CityInfoAPI.UI
 {
     public class Program
     {

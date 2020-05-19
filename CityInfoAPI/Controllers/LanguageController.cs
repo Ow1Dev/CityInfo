@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using CityInfoAPI.Models;
+using CityInfoAPI.Data.Models;
+using CityInfoAPI.Data;
 using CityInfoAPI.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -45,12 +46,12 @@ namespace CityInfoAPI.Controllers
         [HttpPost]
         public IActionResult AddLanguages(LanguageOfCreation language)
         {
-            var finalLanguage = _mapper.Map<Entities.Language>(language);
+            var finalLanguage = _mapper.Map<Data.Entities.Language>(language);
 
             _cityInfoRepository.AddLanguage(finalLanguage);
             _cityInfoRepository.Save();
 
-            var LaunguageToReturn = _mapper.Map<Models.LanguageDto>(finalLanguage);
+            var LaunguageToReturn = _mapper.Map<Data.Models.LanguageDto>(finalLanguage);
             return CreatedAtRoute("GetLanguages",
                 new
                 {
@@ -110,6 +111,18 @@ namespace CityInfoAPI.Controllers
             _cityInfoRepository.Save();
 
             return NoContent();
+        }
+
+        [HttpGet("{LanguageId}/cities")]
+        public ActionResult<IEnumerable<CityDto>> GetCitiesFromLanguages(int languageId)
+        {
+            if(!_cityInfoRepository.LanguageExists(languageId))
+            {
+                return BadRequest();
+            }
+
+            var CitiesFromRepo = _cityInfoRepository.GetCitiesFromLanguages(languageId);
+            return Ok(_mapper.Map<IEnumerable<CityDto>>(CitiesFromRepo));
         }
     }
 }

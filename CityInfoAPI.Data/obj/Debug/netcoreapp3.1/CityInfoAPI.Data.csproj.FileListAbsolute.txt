@@ -1,0 +1,8 @@
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\bin\Debug\netcoreapp3.1\CityInfoAPI.Data.deps.json
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\bin\Debug\netcoreapp3.1\CityInfoAPI.Data.dll
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\obj\Debug\netcoreapp3.1\CityInfoAPI.Data.csprojAssemblyReference.cache
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\obj\Debug\netcoreapp3.1\CityInfoAPI.Data.AssemblyInfoInputs.cache
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\obj\Debug\netcoreapp3.1\CityInfoAPI.Data.AssemblyInfo.cs
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\bin\Debug\netcoreapp3.1\CityInfoAPI.Data.runtimeconfig.json
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\bin\Debug\netcoreapp3.1\CityInfoAPI.Data.runtimeconfig.dev.json
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Data\obj\Debug\netcoreapp3.1\CityInfoAPI.Data.genruntimeconfig.cache

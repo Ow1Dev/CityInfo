@@ -1,4 +1,4 @@
-﻿using CityInfoAPI.Contexts;
+﻿using CityInfoAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

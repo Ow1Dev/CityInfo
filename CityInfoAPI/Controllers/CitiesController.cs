@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CityInfoAPI.Models;
+using CityInfoAPI.Data.Models;
 using CityInfoAPI.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +27,7 @@ namespace CityInfoAPI.Controllers
         }
 
         [HttpGet()]
-        public IActionResult getCities( [FromQuery] string orderby, [FromQuery] bool GoDeeper = false)
+        public IActionResult getCities([FromQuery] string orderby, [FromQuery] bool GoDeeper = false)
         {
             var cityEntities = _cityInfoRepository.GetCities(orderby);
 
@@ -61,11 +61,11 @@ namespace CityInfoAPI.Controllers
         [HttpPost]
         public IActionResult CreateCity([FromBody] CityOfCreationDto cityOfCreation)
         {
-            var FinalCity = _mapper.Map<Entities.City>(cityOfCreation);
+            var FinalCity = _mapper.Map<Data.Entities.City>(cityOfCreation);
             _cityInfoRepository.AddCity(FinalCity);
             _cityInfoRepository.Save();
 
-            var CityToReturn = _mapper.Map<Models.CityDto>(FinalCity);
+            var CityToReturn = _mapper.Map<Data.Models.CityDto>(FinalCity);
             return CreatedAtRoute("GetCity",
                 new { id = CityToReturn.Id },
                 CityToReturn);
@@ -126,6 +126,7 @@ namespace CityInfoAPI.Controllers
             return NoContent();
         }
 
+        #region Languages
         [HttpGet("{id}/languages")]
         public ActionResult<IEnumerable<LanguageDto>> GetLanguagesFromCity(int id)
         {
@@ -170,5 +171,6 @@ namespace CityInfoAPI.Controllers
 
             return NoContent();
         }
+        #endregion
     }
 }

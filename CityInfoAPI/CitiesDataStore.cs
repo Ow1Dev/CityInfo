@@ -1,10 +1,10 @@
-﻿using CityInfoAPI.Models;
+﻿using CityInfoAPI.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CityInfoAPI
+namespace CityInfoAPI.UI
 {
     public class CitiesDataStore
     {

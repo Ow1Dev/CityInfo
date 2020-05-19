@@ -4396,6 +4396,36 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
+      },
+      "CityInfoAPI.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "AutoMapper": "9.0.0",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
+          "Microsoft.EntityFrameworkCore": "2.1.0",
+          "Microsoft.EntityFrameworkCore.Design": "2.1.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.1.0"
+        },
+        "compile": {
+          "bin/placeholder/CityInfoAPI.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CityInfoAPI.Data.dll": {}
+        }
+      },
+      "CityInfoAPI.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "CityInfoAPI.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CityInfoAPI.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CityInfoAPI.Services.dll": {}
+        }
       }
     }
   },
@@ -12040,11 +12070,22 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
+    },
+    "CityInfoAPI.Data/1.0.0": {
+      "type": "project",
+      "path": "../CityInfoAPI.Data/CityInfoAPI.Data.csproj",
+      "msbuildProject": "../CityInfoAPI.Data/CityInfoAPI.Data.csproj"
+    },
+    "CityInfoAPI.Services/1.0.0": {
+      "type": "project",
+      "path": "../CityInfoAPI.Services/CityInfoAPI.Services.csproj",
+      "msbuildProject": "../CityInfoAPI.Services/CityInfoAPI.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 7.0.0",
+      "CityInfoAPI.Data >= 1.0.0",
+      "CityInfoAPI.Services >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.NETCore.App >= 2.1.0",
@@ -12057,9 +12098,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI\\CityInfoAPI.csproj",
-      "projectName": "CityInfoAPI",
-      "projectPath": "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI\\CityInfoAPI.csproj",
+      "projectUniqueName": "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI\\CityInfoAPI.UI.csproj",
+      "projectName": "CityInfoAPI.UI",
+      "projectPath": "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI\\CityInfoAPI.UI.csproj",
       "packagesPath": "C:\\Users\\TheOwlGamerPC\\.nuget\\packages\\",
       "outputPath": "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI\\obj\\",
       "projectStyle": "PackageReference",
@@ -12076,7 +12117,14 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI.Data\\CityInfoAPI.Data.csproj": {
+              "projectPath": "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI.Data\\CityInfoAPI.Data.csproj"
+            },
+            "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI.Services\\CityInfoAPI.Services.csproj": {
+              "projectPath": "V:\\Dev\\pluralsight\\Asp.net beginning\\CityInfo\\CityInfoAPI.Services\\CityInfoAPI.Services.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -12088,10 +12136,6 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-            "target": "Package",
-            "version": "[7.0.0, )"
-          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",

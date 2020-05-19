@@ -1,0 +1,12 @@
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.deps.json
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.dll
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.pdb
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Data.dll
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Data.pdb
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.csprojAssemblyReference.cache
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.csproj.CoreCompileInputs.cache
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.AssemblyInfoInputs.cache
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.AssemblyInfo.cs
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.csproj.CopyComplete
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.dll
+V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.pdb
