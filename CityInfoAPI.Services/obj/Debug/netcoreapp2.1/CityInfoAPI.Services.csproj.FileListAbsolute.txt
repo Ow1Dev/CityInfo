@@ -10,3 +10,14 @@ V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\net
 V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.csproj.CopyComplete
 V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.dll
 V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.pdb
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.deps.json
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.dll
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.pdb
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Data.dll
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\bin\Debug\netcoreapp2.1\CityInfoAPI.Data.pdb
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.csprojAssemblyReference.cache
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.AssemblyInfoInputs.cache
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.AssemblyInfo.cs
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.csproj.CopyComplete
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.dll
+C:\dev\H3\Server\CityInfo\CityInfoAPI.Services\obj\Debug\netcoreapp2.1\CityInfoAPI.Services.pdb

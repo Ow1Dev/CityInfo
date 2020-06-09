@@ -22,3 +22,26 @@ V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.
 V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.Data.pdb
 V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.pdb
 V:\Dev\pluralsight\Asp.net beginning\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.csproj.CopyComplete
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\nlog.config
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\appsettings.json
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\appsettings.Production.json
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.UI.deps.json
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.UI.runtimeconfig.json
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.UI.runtimeconfig.dev.json
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.UI.dll
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.UI.pdb
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.Data.dll
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.dll
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.Data.pdb
+C:\dev\H3\Server\CityInfo\CityInfoAPI\bin\Debug\netcoreapp2.1\CityInfoAPI.Services.pdb
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.csprojAssemblyReference.cache
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.AssemblyInfoInputs.cache
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.AssemblyInfo.cs
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.RazorAssemblyInfo.cache
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.RazorAssemblyInfo.cs
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.RazorTargetAssemblyInfo.cache
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.csproj.CopyComplete
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.dll
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.pdb
+C:\dev\H3\Server\CityInfo\CityInfoAPI\obj\Debug\netcoreapp2.1\CityInfoAPI.UI.genruntimeconfig.cache
